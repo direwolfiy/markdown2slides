@@ -31,7 +31,7 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         self.preview_slide()
 
     def preview_slide(self):
-        cmd = f"open {self.output_html}"
+        cmd = f"start {self.output_html}"    #直接改成了适用于windows系统的命令
         try:
             os.system(cmd)
         except:
@@ -45,19 +45,19 @@ class MarkdownRevealjsConverter(MarkdownConverter):
 
     def pandoc_slide_md_to_revealjs(self):
         # generate the temp md to run pandoc
-        with open(self.temp_md_fname, 'w') as f:
-            f.write(self.md_content)
+        with open(self.temp_md_fname, 'w') as f: 
+            f.write(self.md_content)                                     
         cmd = f"""
-        /usr/local/bin/pandoc -t revealjs \
+        F:\Tools\pandoc\pandoc.exe -t revealjs \
         --standalone -i\
     --variable theme={self.config["revealjs_theme"]} \
     --variable transition={self.config["revealjs_transition"]} \
     {self.temp_md_fname} \
     -o {self.temp_html}
         """
-        os.system(cmd)
-        with open(self.temp_html) as f:
-            self.html_content = f.read()
+        os.system(cmd)                       #将上述pandoc.exe的路径改为你的储存路径
+        with open(self.temp_html,'r') as f:  #加入了只读，则上述文件创建失败时报错
+            self.html_content = f.read()                                 
 
     def make_output(self):
         # prepare output dir

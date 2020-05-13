@@ -11,9 +11,10 @@ except:
     exit()
 
 config = dict()
-config["path"] = code_dir/"config.json"
+config["path"] = code_dir/"config.json" 
 
-converter = MarkdownRevealjsConverter(md_fname, **config) 
+#调用class MarkdownRevealjsConverter
+converter = MarkdownRevealjsConverter(md_fname, **config)
 converter.convert()
 
 
