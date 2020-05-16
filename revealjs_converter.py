@@ -31,7 +31,7 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         self.preview_slide()
 
     def preview_slide(self):
-        cmd = f"start {self.output_html}"    #直接改成了适用于windows系统的命令
+        cmd = f"start {self.output_html}"
         try:
             os.system(cmd)
         except:
@@ -45,8 +45,8 @@ class MarkdownRevealjsConverter(MarkdownConverter):
 
     def pandoc_slide_md_to_revealjs(self):
         # generate the temp md to run pandoc
-        with open(self.temp_md_fname, 'w') as f: 
-            f.write(self.md_content)                                     
+        with open(self.temp_md_fname, 'w',encoding = 'utf-8') as f: 
+            f.write(self.md_content)                                     #写入temp md
         cmd = f"""
         F:\Tools\pandoc\pandoc.exe -t revealjs \
         --standalone -i\
@@ -55,9 +55,9 @@ class MarkdownRevealjsConverter(MarkdownConverter):
     {self.temp_md_fname} \
     -o {self.temp_html}
         """
-        os.system(cmd)                       #将上述pandoc.exe的路径改为你的储存路径
-        with open(self.temp_html,'r') as f:  #加入了只读，则上述文件创建失败时报错
-            self.html_content = f.read()                                 
+        os.system(cmd)                                                   #运行pandoc，此处应该生成了文件temp_html
+        with open(self.temp_html,'r',encoding = 'utf-8') as f:
+            self.html_content = f.read()                                 #读取上述文件的内容，存于html_content变量
 
     def make_output(self):
         # prepare output dir
@@ -74,7 +74,7 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         for link in self.media_links:
             shutil.copy2(self.working_folder/link, self.output_folder/"assets")
         # write output html slide file
-        with open(self.output_html, 'w') as f:
+        with open(self.output_html, 'w', encoding = 'utf-8') as f:
             f.write(self.html_content)
 
 
@@ -140,7 +140,7 @@ class MarkdownRevealjsConverter(MarkdownConverter):
                 return True
         return False
 
-    def change_md_to_slide_md(self):
+    def change_md_to_slide_md(self):   #具体的格式转换
 
         
 

@@ -82,7 +82,7 @@ class MarkdownConverter():
                 download_image_filename = f"{self.get_formatted_current_time_filename()}.{suffix}"
                 r = requests.get(link, stream=True)
                 new_link = self.download_dir/download_image_filename
-                with open(new_link, 'wb') as f:
+                with open(new_link, 'wb',encoding = 'utf-8') as f:
                     shutil.copyfileobj(r.raw, f)
                 new_links.append(new_link)
             else:
